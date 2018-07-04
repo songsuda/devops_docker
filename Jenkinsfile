@@ -11,6 +11,7 @@ pipeline {
           steps {
               sh "docker --version"
               sh "docker build -t ${imageName} ."
+              sh "sudo usermod -G docker -a jenkins"
             withCredentials(
                 [usernamePassword(credentialsId: 'docker_hub', 
                 passwordVariable: 'dockerHubPassword', 
