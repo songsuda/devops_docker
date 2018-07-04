@@ -10,8 +10,8 @@ pipeline {
           agent any
           steps {
               sh "docker --version"
-              sh "docker build -t ${imageName} ."
               sh "sudo usermod -G docker -a jenkins"
+              sh "docker build -t ${imageName} ."
             withCredentials(
                 [usernamePassword(credentialsId: 'docker_hub', 
                 passwordVariable: 'dockerHubPassword', 
