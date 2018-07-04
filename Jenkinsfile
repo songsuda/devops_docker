@@ -22,11 +22,27 @@ pipeline {
           }
        }
 
-       stage('Deploy') { 
+/*       stage('Deploy') { 
           agent {label 'mgr1'}
           steps {
            sh "echo h"
           }
        }
+*/
+       stage('Deploy') { 
+          agent {label 'mgr1'}
+          steps {
+              script {
+                  try {
+                    sh "docker service update --image ${env.imageName} demo"
+                    sh "echo update service"
+                  } catch (e){
+                    sh "docker service create --name demo -p 80:3000 ${env.imageName}"
+                    sh "echo create service"
+                  }
+              }
+          }
+       }
+       
     }
 }
